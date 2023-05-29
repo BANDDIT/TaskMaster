@@ -82,8 +82,9 @@ function charValidation(){
         return true;
     }
 }
-/*
+
 function presentDataValidation(){
+    /*
     let path = ref(database, userID+'/Task/'+task_name_val);
     onValue(path,(snapshot)=>{
         if(snapshot.val()==null){
@@ -94,8 +95,19 @@ function presentDataValidation(){
             errorMsg.innerText="You have a same task name in your list"
             return false;
         }
-    });
-}*/
+    });*/
+
+    let size_arrayKey = arrayKey.length;
+    for(let i=0;i<size_arrayKey;i++){
+        if(task_name_val==arrayKey[i]){
+            //console.log(task_name_val);
+            //console.log(arrayKey[i]);
+            errorMsg.innerText="You cannot have a task with the same name";
+            return false;
+        }
+    }
+    return true;
+}
 
 function reset(){
     task_name.value="";
@@ -115,7 +127,7 @@ function sendTaskToDB(){
     reset();
 }
 function validation(){
-    if(blankValidation()&&charValidation()){
+    if(blankValidation()&&charValidation()&&presentDataValidation()){
         //console.log("berhasil");
         return true;
     }
@@ -136,9 +148,11 @@ btn.addEventListener('click',function(){
     deadline_val = deadline.value;
     desc_val = desc.value;
     if(validation()){
-        arrayKey.push(task_name_val);
+        //arrayKey.push(task_name_val);
+        clearAllChild();
         sendTaskToDB();
-        createTask(task_name_val,deadline_val,desc_val);
+        //console.log(arrayKey);
+        //licreateTask(task_name_val,deadline_val,desc_val);
     }
 });
 
@@ -147,7 +161,7 @@ function initializeListener(){
     //KEKNYA GARA2 GAADA DOCUMENT.QUERYSELECTORALL
     check = querySelectorAll('.check');
     back = querySelectorAll('.back');
-    console.log("INITIALIZE LISTENER");
+    //console.log("INITIALIZE LISTENER");
     for(let i=0;i<back.length;i++){
         back[i].addEventListener('click',function(e){
             //alert("MASUK");
@@ -182,20 +196,36 @@ check[1].addEventListener('click',function(){
     alert("NAH2");
 });*/
 
+
+function clearAllChild(){
+    todo_list_item = document.querySelectorAll('.todo_list_item');
+    let size = todo_list_item.length;
+    for(let i=0;i<size;i++){
+        todo_list.removeChild(todo_list_item[i]);
+    }
+}
+
 function defaultInitialize(){
     const databaseRef = ref(database, userID+'/Task/');
+
     onValue(databaseRef,(snapshot)=>{
+        //console.log("DEFAULT INITIALIZE");
+        arrayKey=[];
+        clearAllChild();
         task_list = snapshot.val();
-        for (let taskId in task_list) {
-            let task = task_list[taskId];
-            //console.log(task);
+        if(task_list){
+            for (let taskId in task_list) {
+                let task = task_list[taskId];
+                //console.log(task);
+            }
+            
+            Object.keys(task_list).forEach((taskId) => {
+                let task = task_list[taskId];
+                //console.log(task);
+                arrayKey.push(task.judul);
+                createTask(task.judul,task.deadline,task.desc);
+            });
         }
-        Object.keys(task_list).forEach((taskId) => {
-            let task = task_list[taskId];
-            //console.log(task);
-            arrayKey.push(task.judul);
-            createTask(task.judul,task.deadline,task.desc);
-        });
     });
 }
 defaultInitialize();
@@ -286,14 +316,17 @@ function createTask(judul,deadline,description){
         let path = ref(database, userID+'/Task/'+arrayKey[index]);
         remove(path)
         .then(() => {
+            //console.log(index);
             console.log("Data berhasil dihapus dari database.");
             //alert("Data berhasil dihapus dari database");
         })
         .catch((error) => {
             console.log("Error saat menghapus data:", error);
         });
-        todo_list.removeChild(todo_list_item[index]);
-        arrayKey.pop(index);
+        //todo_list.removeChild(todo_list_item[index]);
+        //console.log("index "+index);
+        //arrayKey.pop(index);
+        //console.log(arrayKey);
     });
 
 }
