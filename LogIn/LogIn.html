@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inspiration&family=Julius+Sans+One&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,600;1,700;1,800;1,900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="LogIn.css"/>
+</head>
+<body>
+    <header>
+        <div class="header_default">
+            <div class="header_logo">
+                <div class="header_logo_up">TM</div>
+                <div class="header_logo_down">TaskMaster</div>
+            </div>
+            <div class="header_auth">
+                <a class="default_sign_up" href="../SignUp/SignUp.html">
+                    Sign Up
+                </a>
+                <a class="default_log_in" href="../LogIn/LogIn.html">
+                    Log In
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <form class="logIn_form">
+            <h1>Log In</h1>
+            <div class="log_in_content">
+                <label for="email">Email</label>
+                <input type="text" id="email"/>
+
+                <label for="password">Password</label>
+                <input type="password" id="password"/>
+
+            </div>
+            <div class="interaction">
+                Not a member? &nbsp;<a href="../SignUp/SignUp.html">Sign Up</a>
+            </div>
+
+            <button type="button">Log In</button>
+
+            <p id="errorMessage"></p>
+        </form>
+    </main>
+
+
+
+    <footer>
+        <div class="footer_logo">
+            <div class="footer_logo_up">TM</div>
+            <div class="footer_logo_down">TaskMaster</div>
+        </div>
+        <p>&copy; Copyright 2023 TaskMaster, All Rights Reserved</p>
+    </footer>
+
+    <script type="module" src="LogIn.js"></script>
+</body>
+</html>
